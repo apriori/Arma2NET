@@ -29,12 +29,15 @@ namespace Arma2Net
 	{
 	private:
 		static StreamWriter^ logWriter;
+		static String^ baseDirectory;
+		static String^ addinDirectory;
+		static String^ logDirectory;
 	internal:
 		static Dictionary<String^, Addin^>^ LoadedAddins;
 	public:
-		static String^ BaseDirectory;
-		static String^ AddinDirectory;
-		static String^ LogDirectory;
+		static property String^ BaseDirectory { String^ get(void); private: void set(String^ value); }
+		static property String^ AddinDirectory { String^ get(void); private: void set(String^ value); }
+		static property String^ LogDirectory { String^ get(void); private: void set(String^ value); }
 		static Utils();
 		static void Log(String^ format, ... array<Object^>^ args);
 		static void Log(String^ message);

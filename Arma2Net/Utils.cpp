@@ -21,12 +21,19 @@ using namespace System::IO;
 
 namespace Arma2Net
 {
+	void Utils::BaseDirectory::set(String^ value) { Utils::baseDirectory = value; }
+	String^ Utils::BaseDirectory::get(void) { return Utils::baseDirectory; }
+	void Utils::AddinDirectory::set(String^ value) { Utils::addinDirectory = value; }
+	String^ Utils::AddinDirectory::get(void) { return Utils::addinDirectory; }
+	void Utils::LogDirectory::set(String^ value) { Utils::logDirectory = value; }
+	String^ Utils::LogDirectory::get(void) { return Utils::logDirectory; }
+
 	static Utils::Utils()
 	{
 		Utils::BaseDirectory = Path::GetDirectoryName(Assembly::GetExecutingAssembly()->Location);
 		Utils::AddinDirectory = Path::Combine(BaseDirectory, "Addins");
-
 		Utils::LogDirectory = Path::Combine(Environment::GetFolderPath(Environment::SpecialFolder::LocalApplicationData), "Arma2NET");
+
 		Directory::CreateDirectory(Utils::LogDirectory);
 		Utils::logWriter = gcnew StreamWriter(Path::Combine(Utils::LogDirectory, "Arma2NET.log"), true);
 	}
