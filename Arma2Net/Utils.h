@@ -20,12 +20,15 @@
 
 using namespace System;
 using namespace System::Collections::Generic;
+using namespace System::IO;
 using namespace System::Reflection;
 
 namespace Arma2Net
 {
 	public ref class Utils abstract sealed
 	{
+	private:
+		static StreamWriter^ logWriter;
 	internal:
 		static Dictionary<String^, Addin^>^ LoadedAddins;
 	public:

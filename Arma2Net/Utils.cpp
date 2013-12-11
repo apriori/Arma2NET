@@ -25,7 +25,10 @@ namespace Arma2Net
 	{
 		Utils::BaseDirectory = Path::GetDirectoryName(Assembly::GetExecutingAssembly()->Location);
 		Utils::AddinDirectory = Path::Combine(BaseDirectory, "Addins");
+
 		Utils::LogDirectory = Path::Combine(Environment::GetFolderPath(Environment::SpecialFolder::LocalApplicationData), "Arma2NET");
+		Directory::CreateDirectory(Utils::LogDirectory);
+		Utils::logWriter = gcnew StreamWriter(Path::Combine(Utils::LogDirectory, "Arma2NET.log"), true);
 	}
 
 	void Utils::Log(String^ format, ... array<Object^>^ args)
@@ -37,11 +40,7 @@ namespace Arma2Net
 	{
 		try
 		{
-			if (!Directory::Exists(Utils::LogDirectory))
-				Directory::CreateDirectory(Utils::LogDirectory);
-
-			auto path = Path::Combine(Utils::LogDirectory, "Arma2NET.log");
-			File::AppendAllText(path, DateTime::Now.ToString(CultureInfo::InvariantCulture) + " " + message + Environment::NewLine);
+			logWriter->WriteLine(DateTime::Now.ToString(CultureInfo::InvariantCulture) + " " + message);
 		}
 		catch (...) {}
 	}
