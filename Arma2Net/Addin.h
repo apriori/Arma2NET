@@ -16,13 +16,11 @@
 
 #pragma once
 
-using namespace System;
-
 namespace Arma2Net
 {
 	public ref struct Addin abstract
 	{
-		virtual String^ Invoke(String^ args, int maxResultSize) abstract;
+		virtual System::String^ Invoke(System::String^ args, int maxResultSize) abstract;
 	};
 }
 

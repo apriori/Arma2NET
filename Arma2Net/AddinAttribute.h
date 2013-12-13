@@ -16,17 +16,15 @@
 
 #pragma once
 
-using namespace System;
-
 namespace Arma2Net
 {
-	[AttributeUsageAttribute(AttributeTargets::Class)]
-	public ref struct AddinAttribute : public Attribute
+	[System::AttributeUsageAttribute(System::AttributeTargets::Class)]
+	public ref struct AddinAttribute : public System::Attribute
 	{
-		property String^ Name;
-		property String^ Version;
-		property String^ Author;
-		property String^ Description;
-		AddinAttribute(String^ name);
+		property System::String^ Name;
+		property System::String^ Version;
+		property System::String^ Author;
+		property System::String^ Description;
+		AddinAttribute(System::String^ name);
 	};
 }

@@ -18,18 +18,15 @@
 
 #include "Addin.h"
 
-using namespace System;
-using namespace System::Collections::Generic;
-
 namespace Arma2Net
 {
 	ref class AddinManager
 	{
 	private:
-		Dictionary<String^, Addin^>^ loadedAddins;
+		System::Collections::Generic::Dictionary<System::String^, Addin^>^ loadedAddins;
 	internal:
 		AddinManager(void);
 		void LoadAddins(void);
-		String^ InvokeAddin(String^ name, String^ args, int maxResultSize);
+		System::String^ InvokeAddin(System::String^ name, System::String^ args, int maxResultSize);
 	};
 }

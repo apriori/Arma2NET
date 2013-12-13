@@ -18,21 +18,17 @@
 
 #include "AddinManager.h"
 
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::Reflection;
-
 namespace Arma2Net
 {
 	public ref class Bridge abstract sealed
 	{
 	private:
-		static Dictionary<String^, Assembly^>^ assemblyCache;
+		static System::Collections::Generic::Dictionary<System::String^, System::Reflection::Assembly^>^ assemblyCache;
 		static AddinManager^ addinManager;
-		static Assembly^ ResolveAssembly(Object^ sender, ResolveEventArgs^ e);
+		static System::Reflection::Assembly^ ResolveAssembly(System::Object^ sender, System::ResolveEventArgs^ e);
 		static Bridge(void);
 	public:
-		static String^ InvokeFunction(String^ name, String^ args, int maxResultSize);
+		static System::String^ InvokeFunction(System::String^ name, System::String^ args, int maxResultSize);
 		static void InvokeFunction(char* output, int outputSize, const char* function);
 	};
 }

@@ -18,28 +18,23 @@
 
 #include "Addin.h"
 
-using namespace System;
-using namespace System::Collections::Generic;
-using namespace System::IO;
-using namespace System::Reflection;
-
 namespace Arma2Net
 {
 	public ref class Utils abstract sealed
 	{
 	private:
-		static StreamWriter^ logWriter;
-		static String^ baseDirectory;
-		static String^ addinDirectory;
-		static String^ logDirectory;
+		static System::IO::StreamWriter^ logWriter;
+		static System::String^ baseDirectory;
+		static System::String^ addinDirectory;
+		static System::String^ logDirectory;
 	internal:
-		static Dictionary<String^, Addin^>^ LoadedAddins;
+		static System::Collections::Generic::Dictionary<System::String^, Addin^>^ LoadedAddins;
 	public:
-		static property String^ BaseDirectory { String^ get(void); private: void set(String^ value); }
-		static property String^ AddinDirectory { String^ get(void); private: void set(String^ value); }
-		static property String^ LogDirectory { String^ get(void); private: void set(String^ value); }
+		static property System::String^ BaseDirectory { System::String^ get(void); private: void set(System::String^ value); }
+		static property System::String^ AddinDirectory { System::String^ get(void); private: void set(System::String^ value); }
+		static property System::String^ LogDirectory { System::String^ get(void); private: void set(System::String^ value); }
 		static Utils();
-		static void Log(String^ format, ... array<Object^>^ args);
-		static void Log(String^ message);
+		static void Log(System::String^ format, ... array<Object^>^ args);
+		static void Log(System::String^ message);
 	};
 }

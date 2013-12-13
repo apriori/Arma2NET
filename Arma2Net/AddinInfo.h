@@ -18,14 +18,12 @@
 
 #include "AddinAttribute.h"
 
-using namespace System;
-
 namespace Arma2Net
 {
 	ref class AddinInfo
 	{
 	internal:
-		Type^ Type;
+		System::Type^ Type;
 		AddinAttribute^ Attribute;
 	};
 }

@@ -21,7 +21,9 @@
 #include "Utils.h"
 
 using namespace System;
+using namespace System::Collections::Generic;
 using namespace System::IO;
+using namespace System::Reflection;
 using namespace System::Text;
 
 namespace Arma2Net
