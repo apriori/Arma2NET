@@ -14,28 +14,8 @@
 * limitations under the License.
 */
 
+#pragma once
+
 #include <Windows.h>
-#include "RVExtension.h"
-#include "Bridge.h"
 
-using namespace Arma2Net;
-
-extern "C" __declspec(dllexport) void WINAPI RVExtension(char* output, int outputSize, const char* function)
-{
-	Bridge::InvokeFunction(output, outputSize, function);
-}
-
-#pragma unmanaged
-
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
-{
-	switch (ul_reason_for_call)
-	{
-	case DLL_PROCESS_ATTACH:
-	case DLL_THREAD_ATTACH:
-	case DLL_THREAD_DETACH:
-	case DLL_PROCESS_DETACH:
-		break;
-	}
-	return TRUE;
-}
+extern "C" __declspec(dllexport) void WINAPI RVExtension(char* output, int outputSize, const char* function);

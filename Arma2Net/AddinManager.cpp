@@ -55,12 +55,6 @@ namespace Arma2Net
 		return addins;
 	}
 
-	Assembly^ LoadAddinAssembly(String^ filename)
-	{
-		auto bytes = File::ReadAllBytes(filename);
-		return Assembly::Load(bytes);
-	}
-
 	AddinManager::AddinManager(void)
 	{
 		loadedAddins = gcnew Dictionary<String^, Addin^>(StringComparer::OrdinalIgnoreCase);
@@ -72,7 +66,7 @@ namespace Arma2Net
 		for each (auto file in files)
 		{
 			Utils::Log("Loading addin assembly from {0}", file);
-			auto assembly = LoadAddinAssembly(file);
+			auto assembly = Assembly::LoadFile(file);
 			auto addins = FindAddins(assembly);
 
 			for each (auto addin in addins)

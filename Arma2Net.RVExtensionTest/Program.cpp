@@ -14,28 +14,24 @@
 * limitations under the License.
 */
 
-#include <Windows.h>
-#include "RVExtension.h"
-#include "Bridge.h"
+#include <iostream>
+#include <string>
+#include "..\Arma2Net\RVExtension.h"
 
-using namespace Arma2Net;
+#define OUTPUT_SIZE 20000
 
-extern "C" __declspec(dllexport) void WINAPI RVExtension(char* output, int outputSize, const char* function)
+int main(void)
 {
-	Bridge::InvokeFunction(output, outputSize, function);
-}
-
-#pragma unmanaged
-
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
-{
-	switch (ul_reason_for_call)
+	while (true)
 	{
-	case DLL_PROCESS_ATTACH:
-	case DLL_THREAD_ATTACH:
-	case DLL_THREAD_DETACH:
-	case DLL_PROCESS_DETACH:
-		break;
+		std::string functionString;
+		std::cout << "Enter function name: ";
+		std::getline(std::cin, functionString);
+
+		const char* function = functionString.c_str();
+		char output[OUTPUT_SIZE] = { 0 };
+		RVExtension(output, OUTPUT_SIZE, function);
+
+		std::cout << output << std::endl;
 	}
-	return TRUE;
 }
