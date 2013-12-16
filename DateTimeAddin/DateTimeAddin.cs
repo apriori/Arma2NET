@@ -14,6 +14,7 @@
 * limitations under the License.
 */
 
+using System.Globalization;
 using Arma2Net;
 using SDateTime = System.DateTime;
 
@@ -24,7 +25,10 @@ namespace DateTimeAddin
 	{
 		public override string Invoke(string args, int maxResultSize)
 		{
-			return SDateTime.Now.ToString();
+			var split = (args ?? "").Split(',');
+			var dateTime = split[0] == "now" ? SDateTime.Now : SDateTime.UtcNow;
+			var format = split.Length > 1 ? split[1] : "G";
+			return dateTime.ToString(format, CultureInfo.InvariantCulture);
 		}
 	}
 }
