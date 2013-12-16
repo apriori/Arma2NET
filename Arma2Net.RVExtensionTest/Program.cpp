@@ -27,6 +27,8 @@ int main(void)
 		std::string functionString;
 		std::cout << "Enter function name: ";
 		std::getline(std::cin, functionString);
+		if (functionString.length() == 0)
+			continue;
 
 		const char* function = functionString.c_str();
 		char output[OUTPUT_SIZE] = { 0 };
