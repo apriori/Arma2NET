@@ -59,7 +59,7 @@ namespace Arma2Net
 					assemblyCache->Add(requestedAssembly->FullName, assembly);
 					return assembly;
 				}
-				catch (...) {}
+				catch (...) { }
 			}
 		}
 		return nullptr;
@@ -106,15 +106,30 @@ namespace Arma2Net
 	{
 		auto maxResultSize = outputSize - 1; // reserve last byte
 
-		auto addinNameAndArgs = GetAddinNameAndArgs(gcnew String(function));
+		auto functionString = gcnew String(function);
 
-		auto result = Bridge::InvokeFunction(addinNameAndArgs->Item1, addinNameAndArgs->Item2, maxResultSize);
-		if (result == nullptr)
-			return;
+		auto addinNameAndArgs = GetAddinNameAndArgs(functionString);
+
+		String^ result = nullptr;
+		try
+		{
+			result = Bridge::InvokeFunction(addinNameAndArgs->Item1, addinNameAndArgs->Item2, maxResultSize);
+			if (result == nullptr)
+				return;
+		}
+		catch (Exception^ e)
+		{
+			result = "throw \"" + e->GetType() + "\"";
+			Utils::Log("Failed to invoke function {0}", functionString);
+			Utils::Log(e->ToString());
+		}
 
 		auto byteCount = Encoding::ASCII->GetByteCount(result);
 		if (byteCount > maxResultSize)
+		{
 			result = "throw \"ResultTooLong\"";
+			Utils::Log("Failed to return the result of {0} because it is too long ({0} > {1})", functionString, byteCount, maxResultSize);
+		}
 
 		msclr::interop::marshal_context context;
 		strncpy_s(output, outputSize, context.marshal_as<const char*>(result), _TRUNCATE);
