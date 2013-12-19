@@ -99,6 +99,8 @@ namespace Arma2Net
 
 	String^ Bridge::InvokeFunction(String^ name, String^ args, int maxResultSize)
 	{
+		if (String::IsNullOrEmpty(name))
+			return nullptr;
 		return addinManager->InvokeAddin(name, args, maxResultSize);
 	}
 
