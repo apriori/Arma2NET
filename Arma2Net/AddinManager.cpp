@@ -18,6 +18,7 @@
 #include "AddinAttribute.h"
 #include "AddinInfo.h"
 #include "AddinManager.h"
+#include "SyncAddinInvocationMethod.h"
 #include "Utils.h"
 
 using namespace System;
@@ -109,6 +110,9 @@ namespace Arma2Net
 		if (!loadedAddins->TryGetValue(name, addin))
 			throw gcnew InvalidOperationException("Cannot locate addin " + name);
 
-		return addin->Invoke(args, maxResultSize);
+		if (addin->InvocationMethod == nullptr)
+			addin->InvocationMethod = gcnew SyncAddinInvocationMethod(addin);
+
+		return addin->InvocationMethod->Invoke(args, maxResultSize);
 	}
 }

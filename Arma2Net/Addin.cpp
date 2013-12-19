@@ -14,24 +14,17 @@
 * limitations under the License.
 */
 
-#pragma once
-
-#include "IAddinInvocationMethod.h"
+#include "Addin.h"
 
 namespace Arma2Net
 {
-	public ref class Addin abstract
+	IAddinInvocationMethod^ Addin::InvocationMethod::get(void)
 	{
-	private:
-		IAddinInvocationMethod^ invocationMethod;
-	public:
-		property IAddinInvocationMethod^ InvocationMethod
-		{
-			virtual IAddinInvocationMethod^ get(void);
-			virtual void set(IAddinInvocationMethod^ value);
-		}
+		return Addin::invocationMethod;
+	}
 
-		virtual System::String^ Invoke(System::String^ args, int maxResultSize) abstract;
-	};
+	void Addin::InvocationMethod::set(IAddinInvocationMethod^ value)
+	{
+		Addin::invocationMethod = value;
+	}
 }
-

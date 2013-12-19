@@ -16,22 +16,10 @@
 
 #pragma once
 
-#include "IAddinInvocationMethod.h"
-
 namespace Arma2Net
 {
-	public ref class Addin abstract
+	public interface class IAddinInvocationMethod
 	{
-	private:
-		IAddinInvocationMethod^ invocationMethod;
-	public:
-		property IAddinInvocationMethod^ InvocationMethod
-		{
-			virtual IAddinInvocationMethod^ get(void);
-			virtual void set(IAddinInvocationMethod^ value);
-		}
-
-		virtual System::String^ Invoke(System::String^ args, int maxResultSize) abstract;
+		System::String^ Invoke(System::String^ args, int maxResultSize);
 	};
 }
-

@@ -14,24 +14,20 @@
 * limitations under the License.
 */
 
-#pragma once
+#include "SyncAddinInvocationMethod.h"
+#include "Addin.h"
 
-#include "IAddinInvocationMethod.h"
+using namespace System;
 
 namespace Arma2Net
 {
-	public ref class Addin abstract
+	SyncAddinInvocationMethod::SyncAddinInvocationMethod(Addin^ addin)
 	{
-	private:
-		IAddinInvocationMethod^ invocationMethod;
-	public:
-		property IAddinInvocationMethod^ InvocationMethod
-		{
-			virtual IAddinInvocationMethod^ get(void);
-			virtual void set(IAddinInvocationMethod^ value);
-		}
+		this->addin = addin;
+	}
 
-		virtual System::String^ Invoke(System::String^ args, int maxResultSize) abstract;
-	};
+	String^ SyncAddinInvocationMethod::Invoke(String^ args, int maxResultSize)
+	{
+		return addin->Invoke(args, maxResultSize);
+	}
 }
-
