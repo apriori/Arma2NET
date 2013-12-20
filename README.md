@@ -14,7 +14,7 @@ To use Arma2NET you should be running Arma 3 or Arma 2 version 1.62 or later.
 
 Microsoft .NET Framework 4 Client Profile must be installed. Download it from http://www.microsoft.com/download/en/details.aspx?id=24872
 
-Microsoft Visual C++ 2013 32-bit must also be installed. Download it from http://www.microsoft.com/en-us/download/details.aspx?id=30679, selecting VSU_4\vcredist_x86.exe.
+Microsoft Visual C++ 2013 32-bit must also be installed. Download it from http://www.microsoft.com/en-us/download/details.aspx?id=40784, selecting vcredist_x86.exe.
 
 Installation
 ------------
