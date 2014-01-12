@@ -35,7 +35,7 @@ namespace Arma2Net
 		Utils::Log("Resolving assembly {0}", requestedAssembly->Name);
 
 		Assembly^ assembly;
-		if (assemblyCache->TryGetValue(requestedAssembly->Name, assembly))
+		if (assemblyCache->TryGetValue(requestedAssembly->FullName, assembly))
 		{
 			Utils::Log("Retrieved assembly {0} from assembly cache", requestedAssembly->Name);
 			return assembly;
