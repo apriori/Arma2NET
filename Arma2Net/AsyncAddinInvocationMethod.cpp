@@ -42,7 +42,7 @@ namespace Arma2Net
 
 		virtual String^ Invoke(String^ args, int maxResultSize)
 		{
-			if (args == "getresult")
+			if (args->Equals("getresult", StringComparer::OrdinalIgnoreCase))
 			{
 				if (results->Count > 0)
 					return results->Dequeue();
