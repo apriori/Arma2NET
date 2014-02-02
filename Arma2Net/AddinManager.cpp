@@ -70,6 +70,8 @@ namespace Arma2Net
 			auto assembly = Assembly::LoadFile(file);
 			auto addins = FindAddins(assembly);
 
+			Utils::Log("Found {0} addins", addins->Count);
+
 			for each (auto addin in addins)
 			{
 				Utils::Log("Found addin type {0}", addin->Type);
