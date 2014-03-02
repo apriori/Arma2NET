@@ -15,6 +15,7 @@
 */
 
 #include "Addin.h"
+#include "Guid.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -22,18 +23,27 @@ using namespace System::Threading::Tasks;
 
 namespace Arma2Net
 {
+	typedef Tuple<Guid, String^, int> InvokeArgsTuple;
 	public ref class AsyncAddinInvocationMethod : public IAddinInvocationMethod
 	{
 	private:
+		static String^ CID_PREFIX = "___CID";
 		initonly Addin^ addin;
-		initonly Queue<String^>^ results = gcnew Queue<String^>;
+		initonly Dictionary<Guid, String^>^ results = gcnew Dictionary<Guid, String^>;
+		initonly Dictionary<Guid, Task^>^ tasks = gcnew Dictionary<Guid, Task^>;
 
-		void InvokeImpl(Object^ obj)
+		void InvokeImpl(Object^ object)
 		{
-			auto tuple = (Tuple<String^, int>^)obj;
-			auto result = addin->Invoke(tuple->Item1, tuple->Item2);
-			results->Enqueue(result);
+			auto tuple = (InvokeArgsTuple^)object;
+			auto result = addin->Invoke(tuple->Item2, tuple->Item3);
+			results[tuple->Item1] = result;
 		}
+
+		String^ uuidString(Guid str) 
+		{
+			return CID_PREFIX + str;
+		}
+
 	public:
 		AsyncAddinInvocationMethod(Addin^ addin)
 		{
@@ -42,14 +52,43 @@ namespace Arma2Net
 
 		virtual String^ Invoke(String^ args, int maxResultSize)
 		{
-			if (args->Equals("getresult", StringComparer::OrdinalIgnoreCase))
+			if (!String::IsNullOrEmpty(args) && args->StartsWith(CID_PREFIX))
 			{
-				if (results->Count > 0)
-					return results->Dequeue();
-				return nullptr;
+				if (args->Length <= CID_PREFIX->Length) {
+					return "Invalid guid " + args + " for call";
+				}
+
+				auto cidPart = args->Substring(CID_PREFIX->Length);
+				System::Guid guid = System::Guid::Parse(cidPart);
+				Task^ matchingTask;
+
+				if (tasks->TryGetValue(guid, matchingTask))
+				{
+					matchingTask->Wait();
+					return results[guid];
+				}
+				else
+				{
+					return "guid " + args + " not found";
+				}
 			}
-			auto tuple = Tuple::Create(args, maxResultSize);
-			Task::Factory->StartNew(gcnew Action<Object^>(this, &AsyncAddinInvocationMethod::InvokeImpl), tuple);
+			else
+			{
+				//System::Guid guid = CreateSequentialUuid();
+				System::Guid guid = System::Guid::NewGuid();
+
+				auto argsCopy = args;
+
+				if (String::IsNullOrEmpty(args)) {
+					argsCopy = "";
+				}
+
+				auto tuple = Tuple::Create(guid, argsCopy, maxResultSize);
+				Task^ task = Task::Factory->StartNew(gcnew Action<Object^>(this, &AsyncAddinInvocationMethod::InvokeImpl), tuple);
+				tasks[guid] = task;
+
+				return uuidString(guid);
+			}
 			return nullptr;
 		}
 	};

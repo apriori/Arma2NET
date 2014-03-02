@@ -68,5 +68,8 @@
     <ClInclude Include="SyncAddinInvocationMethod.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Guid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
