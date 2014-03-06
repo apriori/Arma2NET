@@ -91,6 +91,7 @@
     <ClCompile Include="AddinManager.cpp" />
     <ClCompile Include="AsyncAddinInvocationMethod.cpp" />
     <ClCompile Include="Bridge.cpp" />
+    <ClCompile Include="FFAsyncAddinInvocationMethod.cpp" />
     <ClCompile Include="SyncAddinInvocationMethod.cpp" />
     <ClCompile Include="RVExtension.cpp" />
     <ClCompile Include="Utils.cpp" />
